@@ -1,4 +1,4 @@
-# images.saatchiart.com 
+# images.saatchiart.com by user
 * URL format: `https://images.saatchiart.com/saatchi/{artist id}/art/{portfolio id}/{image filename}.jpg`
 * Block at no less than `https://images.saatchiart.com/saatchi/{artist id}/`
 
