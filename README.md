@@ -1,5 +1,5 @@
-# Brave Search AI Image Results Blocking Docs
-Documentation of blocking AI image results from appearing in Brave Search searches.
+# Brave Search Image Results Blocking Docs
+Documentation of blocking image results from appearing in Brave Search searches.
 
 ## Brave search image URLs
 * Image result URL format: `https://imgs.search.brave.com/{hash}/{resize instruction}/{gravity and encoding}/{base 64 encoded with slashes every 16 chars}`
