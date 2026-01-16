@@ -1,14 +1,16 @@
-Tldr: append [AEIMQUYcgk][^v] to end of https://www.artlimited.net/user/{user id parts} once in base 64
+Tldr: append `[AEIMQUYcgk][^v]` to end of `https://www.artlimited.net/user/{user id parts}` once in base 64
 Eg:
-1. Start: https://www.artlimited.net/user/1/0/6/1/0/7/6/0
-2. Convert to base 64: aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82Lz
-3. Add the regex: aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82Lz[AEIMQUYcgk][^v]
-4. Convert to Brave search format: aHR0cHM6Ly93d3cu/YXJ0bGltaXRlZC5u/ZXQvdXNlci8xLzAv/Ni8xLzAvNy82Lz[AEIMQUYcgk][^v]
-5. Follow adblock syntax: aHR0cHM6Ly93d3cu\\/YXJ0bGltaXRlZC5u\\/ZXQvdXNlci8xLzAv\\/Ni8xLzAvNy82Lz[AEIMQUYcgk][^v]
-6. Add the rule: search.brave.com##.image-result:has(img:matches-attr(src="/aHR0cHM6Ly93d3cu\\/YXJ0bGltaXRlZC5u\\/ZXQvdXNlci8xLzAv\\/Ni8xLzAvNy82Lz[AEIMQUYcgk][^v]/"))
+1. Start: `https://www.artlimited.net/user/1/0/6/1/0/7/6/0`
+2. Convert to base 64: `aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzA`
+3. Remove the last character: `aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82Lz`
+4. Add the regex: `aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82Lz[AEIMQUYcgk][^v]`
+5. Convert to Brave search format: `aHR0cHM6Ly93d3cu/YXJ0bGltaXRlZC5u/ZXQvdXNlci8xLzAv/Ni8xLzAvNy82Lz[AEIMQUYcgk][^v]`
+6. Follow adblock syntax: `aHR0cHM6Ly93d3cu\\/YXJ0bGltaXRlZC5u\\/ZXQvdXNlci8xLzAv\\/Ni8xLzAvNy82Lz[AEIMQUYcgk][^v]`
+7. Add the rule: `search.brave.com##.image-result:has(img:matches-attr(src="/aHR0cHM6Ly93d3cu\\/YXJ0bGltaXRlZC5u\\/ZXQvdXNlci8xLzAv\\/Ni8xLzAvNy82Lz[AEIMQUYcgk][^v]/"))`
 
 ---
-target regex: /https:\/\/www\.artlimited\.net\/user\/1\/0\/6\/1\/0\/7\/6.[^/]/
+target regex: `/https:\/\/www\.artlimited\.net\/user\/1\/0\/6\/1\/0\/7\/6.[^/]/`
+
 but in base 64 format
 
 https://www.artlimited.net/user/1/0/6/1/0/7/6/0
