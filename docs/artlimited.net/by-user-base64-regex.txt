@@ -1,0 +1,91 @@
+Tldr: append [AEIMQUYcgk][^v] to end of https://www.artlimited.net/user/{user id parts} once in base 64
+Eg:
+1. Start: https://www.artlimited.net/user/1/0/6/1/0/7/6/0
+2. Convert to base 64: aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82Lz
+3. Add the regex: aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82Lz[AEIMQUYcgk][^v]
+4. Convert to Brave search format: aHR0cHM6Ly93d3cu/YXJ0bGltaXRlZC5u/ZXQvdXNlci8xLzAv/Ni8xLzAvNy82Lz[AEIMQUYcgk][^v]
+5. Follow adblock syntax: aHR0cHM6Ly93d3cu\\/YXJ0bGltaXRlZC5u\\/ZXQvdXNlci8xLzAv\\/Ni8xLzAvNy82Lz[AEIMQUYcgk][^v]
+6. Add the rule: search.brave.com##.image-result:has(img:matches-attr(src="/aHR0cHM6Ly93d3cu\\/YXJ0bGltaXRlZC5u\\/ZXQvdXNlci8xLzAv\\/Ni8xLzAvNy82Lz[AEIMQUYcgk][^v]/"))
+
+---
+target regex: /https:\/\/www\.artlimited\.net\/user\/1\/0\/6\/1\/0\/7\/6.[^/]/
+but in base 64 format
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82Lz => https://www.artlimited.net/user/1/0/6/1/0/7/6/
+
+---
+should not match
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/0/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzAvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzAvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/0/
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/1/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzEvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzEvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/1/
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/2/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzIvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzIvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/2/
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/3/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzMvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzMvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/3/
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/4/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzQvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzQvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/4/
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/5/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzUvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzUvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/5/
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/6/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzYvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzYvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/6/
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/7/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzcvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzcvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/7/
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/8/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzgvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzgvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/8/
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/9/0
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzkvMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzkvM => https://www.artlimited.net/user/1/0/6/1/0/7/6/9/
+
+---
+
+should match
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/000
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzAwMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzAwM => https://www.artlimited.net/user/1/0/6/1/0/7/6/00
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/010
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzAxMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzAxM => https://www.artlimited.net/user/1/0/6/1/0/7/6/01
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/020
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzAyMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzAyM => https://www.artlimited.net/user/1/0/6/1/0/7/6/02
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/100
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzEwMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzEwM => https://www.artlimited.net/user/1/0/6/1/0/7/6/10
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/110
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzExMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzExM => https://www.artlimited.net/user/1/0/6/1/0/7/6/11
+
+https://www.artlimited.net/user/1/0/6/1/0/7/6/120
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzEyMA
+aHR0cHM6Ly93d3cuYXJ0bGltaXRlZC5uZXQvdXNlci8xLzAvNi8xLzAvNy82LzEyM => https://www.artlimited.net/user/1/0/6/1/0/7/6/12
+
+---
+[AEIMQUYcgk] means [0123456789]
+v seems to mean /
